@@ -12,3 +12,6 @@ A simple script that takes user input to create a basic profile, demonstrating I
 
 ### 3. Rock, Paper, Scissors
 A classic game built to practice `if/elif/else` conditions and using Python's `random` module to create a simple AI opponent.
+
+### 4. Mad Libs Generator
+A classic word game to practice handling multiple user inputs and advanced string formatting with f-strings.
