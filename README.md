@@ -15,3 +15,6 @@ A classic game built to practice `if/elif/else` conditions and using Python's `r
 
 ### 4. Mad Libs Generator
 A classic word game to practice handling multiple user inputs and advanced string formatting with f-strings.
+
+### 5. Number Guessing Game
+A game that demonstrates the use of `while` loops, `if/elif/else` conditional logic, and `try/except` for robust error handling. The player guesses a number and the program provides feedback.
