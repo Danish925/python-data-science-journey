@@ -18,3 +18,9 @@ A classic word game to practice handling multiple user inputs and advanced strin
 
 ### 5. Number Guessing Game
 A game that demonstrates the use of `while` loops, `if/elif/else` conditional logic, and `try/except` for robust error handling. The player guesses a number and the program provides feedback.
+
+### 6. Dice Rolling Simulator
+A fun script that simulates rolling a six-sided die. This project reinforces the use of `while` loops to create a continuous user experience and the `random` module for generating unpredictable outcomes.
+
+### 7. Simple Quiz Game
+A basic quiz application that asks a series of questions and tracks the user's score. This project is a great exercise in using `if/else` statements to evaluate user input and variables to manage the game's state.
