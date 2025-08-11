@@ -24,3 +24,6 @@ A fun script that simulates rolling a six-sided die. This project reinforces the
 
 ### 7. Simple Quiz Game
 A basic quiz application that asks a series of questions and tracks the user's score. This project is a great exercise in using `if/else` statements to evaluate user input and variables to manage the game's state.
+
+### 8. Powerful Password Generator
+A tool that generates secure, random passwords based on user-specified criteria like length and character types. This project demonstrates the use of functions to organize code into logical, reusable blocks and showcases handling user input with robust error checking.
