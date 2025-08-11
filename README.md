@@ -27,3 +27,4 @@ A basic quiz application that asks a series of questions and tracks the user's s
 
 ### 8. Powerful Password Generator
 A tool that generates secure, random passwords based on user-specified criteria like length and character types. This project demonstrates the use of functions to organize code into logical, reusable blocks and showcases handling user input with robust error checking.
+
