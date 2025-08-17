@@ -1,32 +1,77 @@
-# python-data-science-journey
-A beginner-friendly journey into Python for data science. This repository documents my learning path with hands-on scripts, mini-projects, and Jupyter Notebooks, covering Python basics, data handling, and visualization—step by step toward mastering data science and AI skills.
+python-data-science-journey
 
+A beginner-friendly journey into Python for data science. This repository documents my learning path with hands‑on scripts, mini‑projects, and Jupyter Notebooks—covering Python basics, data handling, and visualization on the path to full data science proficiency.
 
-### My Projects ###
+Highlights
 
-### 1. Simple Calculator
-A basic calculator I built with Python to practice fundamental programming concepts. It can add, subtract, multiply, and divide.
+10+ mini Python projects focused on clean functions, input validation, and small CLIs.
 
-### 2. User Profile Creator
-A simple script that takes user input to create a basic profile, demonstrating I/O and string handling.
+Practice across control flow, loops, randomness, error handling, and basic file I/O.
 
-### 3. Rock, Paper, Scissors
-A classic game built to practice `if/elif/else` conditions and using Python's `random` module to create a simple AI opponent.
+Roadmap-aligned learning: foundations now → persistence and OOP → pandas, NumPy, and visualization.
 
-### 4. Mad Libs Generator
-A classic word game to practice handling multiple user inputs and advanced string formatting with f-strings.
+How to run
 
-### 5. Number Guessing Game
-A game that demonstrates the use of `while` loops, `if/elif/else` conditional logic, and `try/except` for robust error handling. The player guesses a number and the program provides feedback.
+Requirements: Python 3.10+.
 
-### 6. Dice Rolling Simulator
-A fun script that simulates rolling a six-sided die. This project reinforces the use of `while` loops to create a continuous user experience and the `random` module for generating unpredictable outcomes.
+Clone:
 
-### 7. Simple Quiz Game
-A basic quiz application that asks a series of questions and tracks the user's score. This project is a great exercise in using `if/else` statements to evaluate user input and variables to manage the game's state.
+git clone https://github.com/Danish925/python-data-science-journey
 
-### 8. Powerful Password Generator
-A tool that generates secure, random passwords based on user-specified criteria like length and character types. This project demonstrates the use of functions to organize code into logical, reusable blocks and showcases handling user input with robust error checking.
+cd python-data-science-journey
 
-### 9. Simple Countdown Timer
-A useful command-line tool that counts down from a user-specified time in seconds. This project was built to reinforce core skills in handling user input with error checking, using `while` loops, and working with Python's built-in `time` module.
+Run any script:
+
+Password Generator: python password_generator.py
+
+Quiz Game: python quiz_game.py
+
+Dice Roller: python dice_roller.py
+
+Countdown Timer: python countdown_timer.py
+
+Tip (Windows): if python is not found, use py instead (e.g., py password_generator.py).
+
+My Projects
+
+Simple Calculator
+A basic calculator to practice fundamental programming concepts—add, subtract, multiply, and divide.
+
+User Profile Creator
+Takes user input to create a basic profile, demonstrating console I/O and string handling.
+
+Rock, Paper, Scissors
+Practices if/elif/else logic and Python’s random module to create a simple opponent.
+
+Mad Libs Generator
+Handles multiple user inputs and uses f‑strings for formatted output.
+
+Number Guessing Game
+Demonstrates while loops, conditional logic, and try/except for robust error handling.
+
+Dice Rolling Simulator
+Simulates a six‑sided die; reinforces randomness and a clean replay loop.
+
+Simple Quiz Game
+Asks questions, tracks score, and provides feedback—good practice in loops and state.
+
+Powerful Password Generator
+Generates secure passwords with configurable length and character sets; includes input validation.
+
+Simple Countdown Timer
+Counts down from a user‑specified time; practices input checks, time.sleep, and mm:ss formatting.
+
+Roadmap (next steps)
+
+File I/O and persistence (upgrade To‑Do app to save/load data cleanly).
+
+OOP refactor (Task/ToDoList classes, JSON persistence, tests).
+
+Analytics toolkit: pandas, NumPy, Matplotlib/Seaborn with EDA notebooks.
+
+Repo info
+
+Pinned on my GitHub profile for easy access.
+
+Releases will be tagged per milestone (e.g., v0.2.0 “Persistence”, v0.3.0 “OOP Refactor”).
+
