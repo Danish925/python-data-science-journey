@@ -34,32 +34,23 @@ Tip (Windows): if python is not found, use py instead (e.g., py password_generat
 
 My Projects
 
-Simple Calculator
-A basic calculator to practice fundamental programming concepts—add, subtract, multiply, and divide.
+Simple Calculator: A basic calculator to practice fundamental programming concepts—add, subtract, multiply, and divide.
 
-User Profile Creator
-Takes user input to create a basic profile, demonstrating console I/O and string handling.
+User Profile Creator: Takes user input to create a basic profile, demonstrating console I/O and string handling.
 
-Rock, Paper, Scissors
-Practices if/elif/else logic and Python’s random module to create a simple opponent.
+Rock, Paper, Scissors: Practices if/elif/else logic and Python’s random module to create a simple opponent.
 
-Mad Libs Generator
-Handles multiple user inputs and uses f‑strings for formatted output.
+Mad Libs Generator: Handles multiple user inputs and uses f‑strings for formatted output.
 
-Number Guessing Game
-Demonstrates while loops, conditional logic, and try/except for robust error handling.
+Number Guessing Game: Demonstrates while loops, conditional logic, and try/except for robust error handling.
 
-Dice Rolling Simulator
-Simulates a six‑sided die; reinforces randomness and a clean replay loop.
+Dice Rolling Simulator: Simulates a six‑sided die; reinforces randomness and a clean replay loop.
 
-Simple Quiz Game
-Asks questions, tracks score, and provides feedback—good practice in loops and state.
+Simple Quiz Game: Asks questions, tracks score, and provides feedback—good practice in loops and state.
 
-Powerful Password Generator
-Generates secure passwords with configurable length and character sets; includes input validation.
+Powerful Password Generator: Generates secure passwords with configurable length and character sets; includes input validation.
 
-Simple Countdown Timer
-Counts down from a user‑specified time; practices input checks, time.sleep, and mm:ss formatting.
+Simple Countdown Timer: Counts down from a user‑specified time; practices input checks, time.sleep, and mm:ss formatting.
 
 Roadmap (next steps)
 
