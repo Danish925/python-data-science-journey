@@ -1,17 +1,40 @@
+Title
 python-data-science-journey
 
-A beginner-friendly journey into Python for data science. This repository documents my learning path with hands‑on scripts, mini‑projects, and Jupyter Notebooks—covering Python basics, data handling, and visualization on the path to full data science proficiency.
+Overview
+A beginner-friendly journey into Python for data science. This repository documents a hands‑on learning path with scripts, mini‑projects, and Jupyter Notebooks—covering Python basics, data handling, and visualization on the path to full data science proficiency.
 
 Highlights
 
 10+ mini Python projects focused on clean functions, input validation, and small CLIs.
 
-Practice across control flow, loops, randomness, error handling, and basic file I/O.
+Practice across control flow, loops, randomness, error handling, and file I/O.
 
-Roadmap-aligned learning: foundations now → persistence and OOP → pandas, NumPy, and visualization.
+Roadmap‑aligned learning: foundations → persistence and OOP → pandas, NumPy, and visualization.
+
+New: To‑Do CLI with human‑readable TXT persistence ([ ]/[x] format).
+
+Projects (selected)
+
+Powerful Password Generator: Secure passwords with configurable length and character sets; robust input validation.
+
+Simple Quiz Game: Asks questions, tracks score, and provides feedback—good practice in loops and state.
+
+Dice Rolling Simulator: Randomness and replay loop with clean structure.
+
+Number Guessing Game: While loops, conditional logic, and try/except for robust error handling.
+
+Simple Countdown Timer: Input checks, time.sleep, and mm:ss formatting.
+
+NEW — To‑Do CLI (TXT persistence):
+
+Add, list, mark complete, delete, and clear completed.
+
+Saves to tasks.txt in a readable format: “[ ] description” / “[x] description”.
+
+Cross‑platform paths (pathlib), UTF‑8 safe.
 
 How to run
-
 Requirements: Python 3.10+.
 
 Clone:
@@ -30,33 +53,37 @@ Dice Roller: python dice_roller.py
 
 Countdown Timer: python countdown_timer.py
 
-Tip (Windows): if python is not found, use py instead (e.g., py password_generator.py).
+To‑Do CLI (TXT): python tasks.py
 
-My Projects
+Tip (Windows): if python is not found, use py instead (e.g., py tasks.py).
 
-Simple Calculator: A basic calculator to practice fundamental programming concepts—add, subtract, multiply, and divide.
+To‑Do CLI details
 
-User Profile Creator: Takes user input to create a basic profile, demonstrating console I/O and string handling.
+File: tasks.py
 
-Rock, Paper, Scissors: Practices if/elif/else logic and Python’s random module to create a simple opponent.
+Features:
 
-Mad Libs Generator: Handles multiple user inputs and uses f‑strings for formatted output.
+Add tasks, view tasks, mark complete, delete tasks, clear completed
 
-Number Guessing Game: Demonstrates while loops, conditional logic, and try/except for robust error handling.
+Human‑readable persistence to tasks.txt (UTF‑8)
 
-Dice Rolling Simulator: Simulates a six‑sided die; reinforces randomness and a clean replay loop.
+File format:
 
-Simple Quiz Game: Asks questions, tracks score, and provides feedback—good practice in loops and state.
+ Buy milk
 
-Powerful Password Generator: Generates secure passwords with configurable length and character sets; includes input validation.
+ Read 10 pages
 
-Simple Countdown Timer: Counts down from a user‑specified time; practices input checks, time.sleep, and mm:ss formatting.
+Notes:
 
-Roadmap (next steps)
+Blank lines are ignored on load.
 
-File I/O and persistence (upgrade To‑Do app to save/load data cleanly).
+Unknown prefixes are treated as incomplete for robustness.
 
-OOP refactor (Task/ToDoList classes, JSON persistence, tests).
+Learning roadmap (next steps)
+
+File I/O and persistence: DONE (To‑Do app saves/loads data cleanly).
+
+OOP refactor: Task/ToDoList classes, JSON persistence, tests.
 
 Analytics toolkit: pandas, NumPy, Matplotlib/Seaborn with EDA notebooks.
 
@@ -66,3 +93,12 @@ Pinned on my GitHub profile for easy access.
 
 Releases will be tagged per milestone (e.g., v0.2.0 “Persistence”, v0.3.0 “OOP Refactor”).
 
+Optional “Coming soon” (if you plan to add soon)
+
+Search/filter by keyword and completion status.
+
+Toggle complete (on/off).
+
+Edit task descriptions.
+
+Undo last action (single‑step history).
