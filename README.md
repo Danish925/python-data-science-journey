@@ -1,27 +1,29 @@
 python-data-science-journey
+
 A beginner-friendly, hands-on journey into Python for data science. This repository documents practical learning through mini-projects, scripts, and Jupyter Notebooks—gradually building a strong foundation in Python programming and data science essentials.
 
 Highlights
-10+ mini Python projects emphasizing clean code, input validation, and interactive CLI tools.
+1.10+ mini Python projects emphasizing clean code, input validation, and interactive CLI tools.
 
-Comprehensive practice across control flow, loops, randomness, error handling, and file I/O.
+2.Comprehensive practice across control flow, loops, randomness, error handling, and file I/O.
 
-Progressive roadmap from basic Python concepts to persistence, OOP, and data visualization with pandas, NumPy, Matplotlib, and Seaborn.
+3.Progressive roadmap from basic Python concepts to persistence, OOP, and data visualization with pandas, NumPy, Matplotlib, and Seaborn.
 
-Recently added: A To-Do CLI app featuring human-readable persistent storage with [ ] / [x] format.
+4.Recently added: A To-Do CLI app featuring human-readable persistent storage with [ ] / [x] format.
 
 Selected Projects Overview
-Powerful Password Generator: Configurable secure passwords with robust input checks.
 
-Simple Quiz Game: Interactive Q&A with feedback and score tracking.
+1.Powerful Password Generator: Configurable secure passwords with robust input checks.
 
-Dice Rolling Simulator: Randomness exploration with replay capabilities.
+2.Simple Quiz Game: Interactive Q&A with feedback and score tracking.
 
-Number Guessing Game: Loop and try/except handling for input robustness.
+3.Dice Rolling Simulator: Randomness exploration with replay capabilities.
 
-Simple Countdown Timer: User input validation, timing, and display formatting.
+4.Number Guessing Game: Loop and try/except handling for input robustness.
 
-To-Do CLI (TXT Persistence):
+5.Simple Countdown Timer: User input validation, timing, and display formatting.
+
+6.To-Do CLI (TXT Persistence):
 
 Add, view, mark complete/incomplete, edit, delete tasks.
 
@@ -54,28 +56,28 @@ File: tasks.py
 
 Features:
 
-Add, list, mark tasks complete/incomplete.
+1.Add, list, mark tasks complete/incomplete.
 
-Edit and delete tasks.
+2.Edit and delete tasks.
 
-Clear all completed tasks with one command.
+3.Clear all completed tasks with one command.
 
-Search and filter tasks by keyword and status.
+4.Search and filter tasks by keyword and status.
 
-Undo last change for simple error recovery.
+5.Undo last change for simple error recovery.
 
-Persistence: Saves tasks in a UTF-8 encoded text file (tasks.txt) with clear [ ] or [x] status markers.
+6.Persistence: Saves tasks in a UTF-8 encoded text file (tasks.txt) with clear [ ] or [x] status markers.
 
-Blank and malformed lines are safely ignored to ensure data robustness.
+7.Blank and malformed lines are safely ignored to ensure data robustness.
 
 What’s Next in the Learning Roadmap
 Object-Oriented Programming (OOP): Refactor projects using classes and inheritance.
 
-JSON Persistence and Automated Testing.
+1.JSON Persistence and Automated Testing.
 
-Advanced Data Analytics: pandas, NumPy, and visualization projects.
+2.Advanced Data Analytics: pandas, NumPy, and visualization projects.
 
-More complex data science mini-projects and explorations.
+3.More complex data science mini-projects and explorations.
 
 This repo is pinned on my GitHub profile for easy access as a personal coding portfolio and learning reference.
 
