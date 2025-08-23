@@ -1,104 +1,83 @@
-Title
 python-data-science-journey
-
-Overview
-A beginner-friendly journey into Python for data science. This repository documents a hands‑on learning path with scripts, mini‑projects, and Jupyter Notebooks—covering Python basics, data handling, and visualization on the path to full data science proficiency.
+A beginner-friendly, hands-on journey into Python for data science. This repository documents practical learning through mini-projects, scripts, and Jupyter Notebooks—gradually building a strong foundation in Python programming and data science essentials.
 
 Highlights
+10+ mini Python projects emphasizing clean code, input validation, and interactive CLI tools.
 
-10+ mini Python projects focused on clean functions, input validation, and small CLIs.
+Comprehensive practice across control flow, loops, randomness, error handling, and file I/O.
 
-Practice across control flow, loops, randomness, error handling, and file I/O.
+Progressive roadmap from basic Python concepts to persistence, OOP, and data visualization with pandas, NumPy, Matplotlib, and Seaborn.
 
-Roadmap‑aligned learning: foundations → persistence and OOP → pandas, NumPy, and visualization.
+Recently added: A To-Do CLI app featuring human-readable persistent storage with [ ] / [x] format.
 
-New: To‑Do CLI with human‑readable TXT persistence ([ ]/[x] format).
+Selected Projects Overview
+Powerful Password Generator: Configurable secure passwords with robust input checks.
 
-Projects (selected)
+Simple Quiz Game: Interactive Q&A with feedback and score tracking.
 
-Powerful Password Generator: Secure passwords with configurable length and character sets; robust input validation.
+Dice Rolling Simulator: Randomness exploration with replay capabilities.
 
-Simple Quiz Game: Asks questions, tracks score, and provides feedback—good practice in loops and state.
+Number Guessing Game: Loop and try/except handling for input robustness.
 
-Dice Rolling Simulator: Randomness and replay loop with clean structure.
+Simple Countdown Timer: User input validation, timing, and display formatting.
 
-Number Guessing Game: While loops, conditional logic, and try/except for robust error handling.
+To-Do CLI (TXT Persistence):
 
-Simple Countdown Timer: Input checks, time.sleep, and mm:ss formatting.
+Add, view, mark complete/incomplete, edit, delete tasks.
 
-NEW — To‑Do CLI (TXT persistence):
+Clear completed tasks with ease.
 
-Add, list, mark complete, delete, and clear completed.
+Undo last action with snapshot history.
 
-Saves to tasks.txt in a readable format: “[ ] description” / “[x] description”.
+Saves tasks to tasks.txt in a readable, cross-platform safe format.
 
-Cross‑platform paths (pathlib), UTF‑8 safe.
+Getting Started
+Requirements: Python 3.10 or higher is recommended.
 
-How to run
-Requirements: Python 3.10+.
+Clone the repository:
 
-Clone:
-
+bash
 git clone https://github.com/Danish925/python-data-science-journey
-
 cd python-data-science-journey
+Running your favorite projects:
 
-Run any script:
+bash
+python password_generator.py
+python quiz_game.py
+python dice_roller.py
+python countdown_timer.py
+python tasks.py        # To-Do CLI application
+Note: Windows users might need to use py instead of python if the former is not recognized.
 
-Password Generator: python password_generator.py
-
-Quiz Game: python quiz_game.py
-
-Dice Roller: python dice_roller.py
-
-Countdown Timer: python countdown_timer.py
-
-To‑Do CLI (TXT): python tasks.py
-
-Tip (Windows): if python is not found, use py instead (e.g., py tasks.py).
-
-To‑Do CLI details
-
+To-Do CLI Application Details
 File: tasks.py
 
 Features:
 
-Add tasks, view tasks, mark complete, delete tasks, clear completed
+Add, list, mark tasks complete/incomplete.
 
-Human‑readable persistence to tasks.txt (UTF‑8)
+Edit and delete tasks.
 
-File format:
+Clear all completed tasks with one command.
 
- Buy milk
+Search and filter tasks by keyword and status.
 
- Read 10 pages
+Undo last change for simple error recovery.
 
-Notes:
+Persistence: Saves tasks in a UTF-8 encoded text file (tasks.txt) with clear [ ] or [x] status markers.
 
-Blank lines are ignored on load.
+Blank and malformed lines are safely ignored to ensure data robustness.
 
-Unknown prefixes are treated as incomplete for robustness.
+What’s Next in the Learning Roadmap
+Object-Oriented Programming (OOP): Refactor projects using classes and inheritance.
 
-Learning roadmap (next steps)
+JSON Persistence and Automated Testing.
 
-File I/O and persistence: DONE (To‑Do app saves/loads data cleanly).
+Advanced Data Analytics: pandas, NumPy, and visualization projects.
 
-OOP refactor: Task/ToDoList classes, JSON persistence, tests.
+More complex data science mini-projects and explorations.
 
-Analytics toolkit: pandas, NumPy, Matplotlib/Seaborn with EDA notebooks.
+This repo is pinned on my GitHub profile for easy access as a personal coding portfolio and learning reference.
 
-Repo info
+Feel free to explore, run the projects, and contribute if you want to! Your feedback and suggestions are always welcome.
 
-Pinned on my GitHub profile for easy access.
-
-Releases will be tagged per milestone (e.g., v0.2.0 “Persistence”, v0.3.0 “OOP Refactor”).
-
-Optional “Coming soon” (if you plan to add soon)
-
-Search/filter by keyword and completion status.
-
-Toggle complete (on/off).
-
-Edit task descriptions.
-
-Undo last action (single‑step history).
