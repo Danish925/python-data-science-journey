@@ -1,85 +1,103 @@
 python-data-science-journey
 
-A beginner-friendly, hands-on journey into Python for data science. This repository documents practical learning through mini-projects, scripts, and Jupyter Notebooks—gradually building a strong foundation in Python programming and data science essentials.
+Overview
+
+A beginner-friendly, hands-on journey into Python for data science—mini-projects, scripts, and notebooks that build a strong foundation step by step. The repository now highlights two structured OOP projects alongside practice scripts and learning notebooks.
 
 Highlights
-1.10+ mini Python projects emphasizing clean code, input validation, and interactive CLI tools.
 
-2.Comprehensive practice across control flow, loops, randomness, error handling, and file I/O.
+1.10+ mini Python projects focusing on clean code, input validation, and interactive CLIs.
 
-3.Progressive roadmap from basic Python concepts to persistence, OOP, and data visualization with pandas, NumPy, Matplotlib, and Seaborn.
+2.Practice across control flow, loops, randomness, error handling, and file I/O.
 
-4.Recently added: A To-Do CLI app featuring human-readable persistent storage with [ ] / [x] format.
+3.Progression from basics to persistence, OOP, and visualization with pandas/NumPy/Matplotlib/Seaborn.
 
-Selected Projects Overview
+4.Newly organized projects/ with per‑project READMEs and runnable entry points.
 
-1.Powerful Password Generator: Configurable secure passwords with robust input checks.
+Projects
 
-2.Simple Quiz Game: Interactive Q&A with feedback and score tracking.
+1.Secure Password Generator (OOP, secrets)
 
-3.Dice Rolling Simulator: Randomness exploration with replay capabilities.
+Folder: projects/password-generator-oop
 
-4.Number Guessing Game: Loop and try/except handling for input robustness.
+Entry: projects/password-generator-oop/main.py
 
-5.Simple Countdown Timer: User input validation, timing, and display formatting.
+Summary: Policy‑driven generator using the OS‑backed secrets module; guarantees at least one character from each enabled class; prints 3 passwords.
 
-6.To-Do CLI (TXT Persistence):
+Open: Folder - main.py
 
-Add, view, mark complete/incomplete, edit, delete tasks.
+2.To‑Do CLI (OOP + JSON + undo)
 
-Clear completed tasks with ease.
+Folder: projects/todo-cli-oop-json
 
-Undo last action with snapshot history.
+Entry: projects/todo-cli-oop-json/todo.py
 
-Saves tasks to tasks.txt in a readable, cross-platform safe format.
+Summary: OOP task manager with JSON persistence, case‑insensitive search/filter, and snapshot‑based undo via deepcopy.
 
-Getting Started
-Requirements: Python 3.10 or higher is recommended.
+Open: Folder - todo.py
 
-Clone the repository:
+Selected mini-projects
 
-bash
+1.Powerful Password Generator (earlier procedural version) – configurable secure passwords with robust input checks.
+
+2.Simple Quiz Game – interactive Q&A with score tracking.
+
+3.Dice Rolling Simulator – randomness exploration with replay loop.
+
+4.Number Guessing Game – loops plus try/except input handling.
+
+5.Simple Countdown Timer – input validation and time display formatting.
+
+Repository layout
+
+1.projects/ — self‑contained mini‑apps with their own README and entry script.
+
+2.scripts/ — small single‑file exercises such as dice_roller.py, quiz_game.py, countdown_timer.py.
+
+3.notebooks/ — Jupyter notebooks for incremental learning and experimentation.
+
+4.data/ — optional raw/ and processed/ subfolders (with a data README when used).
+
+Getting started
+
+1.Requirement: Python 3.9+ recommended.
+
+2.Clone:
+
 git clone https://github.com/Danish925/python-data-science-journey
+
 cd python-data-science-journey
-Running your favorite projects:
 
-bash
-python password_generator.py
-python quiz_game.py
-python dice_roller.py
-python countdown_timer.py
-python tasks.py        # To-Do CLI application
-Note: Windows users might need to use py instead of python if the former is not recognized.
+3.Run a project:
 
-To-Do CLI Application Details
-File: tasks.py
+Password Generator: cd projects/password-generator-oop && python main.py
 
-Features:
+To‑Do CLI: cd projects/todo-cli-oop-json && python todo.py
 
-1.Add, list, mark tasks complete/incomplete.
+Scripts: python scripts/quiz_game.py (etc.)
 
-2.Edit and delete tasks.
+4.Tip (Windows): use py instead of python if python is not recognized.
 
-3.Clear all completed tasks with one command.
+Why these projects
 
-4.Search and filter tasks by keyword and status.
+1.Security: Passwords are generated with secrets.SystemRandom for cryptographic randomness; random is intentionally avoided.
 
-5.Undo last change for simple error recovery.
+2.Reliability: To‑Do state is stored as human‑readable JSON via json.load/json.dump with UTF‑8 and indent=2.
 
-6.Persistence: Saves tasks in a UTF-8 encoded text file (tasks.txt) with clear [ ] or [x] status markers.
+3.Design: Classes separate concerns (Task/ToDoList, PasswordPolicy/PasswordGenerator), making features easier to extend and test.
 
-7.Blank and malformed lines are safely ignored to ensure data robustness.
+Roadmap
 
-What’s Next in the Learning Roadmap
-Object-Oriented Programming (OOP): Refactor projects using classes and inheritance.
+1.JSON persistence and unit tests for selected scripts and projects.
 
-1.JSON Persistence and Automated Testing.
+2.Data analytics stack: pandas, NumPy, visualization (Matplotlib/Seaborn) notebooks.
 
-2.Advanced Data Analytics: pandas, NumPy, and visualization projects.
+3.Additional mini‑projects and EDA exercises to grow the portfolio.
 
-3.More complex data science mini-projects and explorations.
+Contributing
 
-This repo is pinned on my GitHub profile for easy access as a personal coding portfolio and learning reference.
+1.Issues and suggestions are welcome—open a discussion or PR with a clear description.
 
-Feel free to explore, run the projects, and contribute if you want to! Your feedback and suggestions are always welcome.
+2.Use clear commit messages (e.g., feat:, fix:, docs:) for readable history.
 
+3.Prefer relative links in Markdown for navigation inside the repo.
