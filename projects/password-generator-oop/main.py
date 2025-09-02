@@ -1,98 +1,205 @@
-# --- Powerful Password Generator ---
-# Project for Week 4: Functions and Code Organization
+"""
+Secure Password Generator (OOP, secrets)
 
-# 1. Import necessary modules
-# 'random' is used for choosing characters randomly and shuffling the final password.
-# 'string' provides convenient pre-made strings of character sets (e.g., lowercase letters, numbers).
-import random
+Generates strong passwords using cryptographically secure randomness.
+Users select length and inclusion of uppercase, digits, and symbols
+(lowercase is always included). The generator guarantees at least one
+character from every enabled class and returns three passwords per run.
+
+Security notes:
+- Uses secrets.SystemRandom for OS-backed CSPRNG.
+- Avoids the non-cryptographic random module for any selection or shuffle.
+"""
+
+from dataclasses import dataclass
+from typing import List
+import secrets
 import string
 
-# ---- FUNCTION DEFINITION ----
-# We define the main "worker" function here. It is organized to be separate from the user interface code.
-def generate_password(length, include_uppercase, include_numbers, include_symbols):
+
+@dataclass
+class PasswordPolicy:
+    """Configuration for password generation.
+
+    Attributes:
+        length: Target password length; must be positive.
+        use_lowercase: Include lowercase letters.
+        use_uppercase: Include uppercase letters.
+        use_digits: Include decimal digits.
+        use_symbols: Include punctuation symbols.
     """
-    Generates a secure, random password based on user-specified criteria.
+    length: int = 12
+    use_lowercase: bool = True
+    use_uppercase: bool = True
+    use_digits: bool = True
+    use_symbols: bool = True
+
+    def validate(self) -> None:
+        """Validate internal consistency and feasibility.
+
+        Raises:
+            ValueError: If length <= 0 or length is less than the number of
+                enabled character classes (cannot satisfy “at least one per class”).
+        """
+        if self.length <= 0:
+            raise ValueError("length must be positive")
+        enabled_classes = sum([
+            self.use_lowercase,
+            self.use_uppercase,
+            self.use_digits,
+            self.use_symbols,
+        ])
+        if self.length < enabled_classes:
+            raise ValueError(
+                f"length must be >= {enabled_classes} to include one from each enabled class"
+            )
+
+
+class PasswordGenerator:
+    """Secure password generator enforcing a PasswordPolicy.
+
+    The generator:
+      - Builds the allowed character pool from policy flags.
+      - Ensures coverage: at least one char from each enabled class.
+      - Fills remaining length from the whole pool.
+      - Shuffles positions via a cryptographically secure PRNG.
+
+    Example:
+        policy = PasswordPolicy(length=14, use_uppercase=True, use_digits=True, use_symbols=True)
+        gen = PasswordGenerator(policy)
+        passwords = gen.generate_three()
+    """
+
+    def __init__(self, policy: PasswordPolicy) -> None:
+        """Initialize with a validated policy and prepare character sets.
+
+        Args:
+            policy: The generation policy to enforce.
+
+        Raises:
+            ValueError: If policy is invalid or no character classes are enabled.
+        """
+        self.policy = policy
+        self.policy.validate()
+
+        # OS-backed CSPRNG for both choice and shuffle (security-critical).
+        self._rand = secrets.SystemRandom()
+
+        # Assemble per-class sets as strings; disable by emptying.
+        self._lower = string.ascii_lowercase if self.policy.use_lowercase else ""
+        self._upper = string.ascii_uppercase if self.policy.use_uppercase else ""
+        self._digits = string.digits if self.policy.use_digits else ""
+        self._symbols = string.punctuation if self.policy.use_symbols else ""
+
+        # Global pool for general draws.
+        self._pool = "".join([self._lower, self._upper, self._digits, self._symbols])
+        if not self._pool:
+            raise ValueError("No character classes enabled")
+
+    def generate_one(self) -> str:
+        """Generate a single password satisfying the policy.
+
+        Process:
+            1) One required character from each enabled class.
+            2) Remaining characters from the full pool.
+            3) Secure shuffle to randomize positions.
+
+        Returns:
+            A password of length == policy.length.
+        """
+        required: List[str] = []
+
+        if self._lower:
+            required.append(self._rand.choice(self._lower))
+        if self._upper:
+            required.append(self._rand.choice(self._upper))
+        if self._digits:
+            required.append(self._rand.choice(self._digits))
+        if self._symbols:
+            required.append(self._rand.choice(self._symbols))
+
+        remaining = max(0, self.policy.length - len(required))
+        tail = [self._rand.choice(self._pool) for _ in range(remaining)]
+
+        chars = required + tail
+        self._rand.shuffle(chars)  # secure, unbiased permutation
+        return "".join(chars)
+
+    def generate_three(self) -> List[str]:
+        """Generate exactly three passwords.
+
+        Returns:
+            A list with three independently generated passwords.
+        """
+        return [self.generate_one() for _ in range(3)]
+
+
+def _prompt_bool(msg: str, default: bool) -> bool:
+    """Prompt for a boolean (yes/no) with a default.
 
     Args:
-        length (int): The desired length of the password.
-        include_uppercase (bool): Whether to include uppercase letters.
-        include_numbers (bool): Whether to include numbers.
-        include_symbols (bool): Whether to include symbols.
+        msg: Prompt text.
+        default: Value used on empty input.
 
     Returns:
-        str: The generated password string.
+        True if input is affirmative; False otherwise.
     """
-    
-    # 2. Build the pool of available characters
-    # Start with lowercase letters, which we will make mandatory.
-    character_pool = string.ascii_lowercase
-    
-    # Add other character types to the pool based on the True/False arguments passed to the function.
-    if include_uppercase:
-        character_pool += string.ascii_uppercase # Adds "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    if include_numbers:
-        character_pool += string.digits         # Adds "0123456789"
-    if include_symbols:
-        character_pool += string.punctuation    # Adds "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
-        
-    # 3. Generate the password from the character pool
-    # We build the password in a list first, as it's easy to add to and shuffle.
-    password_list = []
-    
-    # This loop runs for the number of times specified by 'length'.
-    # We use '_' as the variable name because we don't need to use the loop counter itself.
-    for _ in range(length):
-        # random.choice() picks one single random character from our pool string.
-        random_char = random.choice(character_pool)
-        # We add (append) the chosen character to our list.
-        password_list.append(random_char)
-    
-    # 4. Shuffle the password list to make it more secure and less predictable.
-    # This ensures characters are not grouped by type (e.g., all letters first, then numbers).
-    random.shuffle(password_list)
-    
-    # 5. Join the list of characters back into a single string and return it.
-    # "".join(list) is the most efficient and standard way to convert a list of characters into a string.
-    return "".join(password_list)
+    suffix = "Y/n" if default else "y/N"
+    ans = input(f"{msg} ({suffix}): ").strip().lower()
+    if not ans:
+        return default
+    return ans in ("y", "yes", "true", "1")
 
 
-# --- MAIN PROGRAM EXECUTION BLOCK ---
-# This is a standard Python convention. The code inside this 'if' statement
-# will only run when the script is executed directly (e.g., 'python password_generator.py').
-# It will NOT run if the script is imported as a module into another file.
+def _prompt_int(msg: str, default: int) -> int:
+    """Prompt for a positive integer with a default fallback.
+
+    Args:
+        msg: Prompt text.
+        default: Value used on empty/invalid input.
+
+    Returns:
+        A positive integer.
+    """
+    ans = input(f"{msg} [{default}]: ").strip()
+    if not ans:
+        return default
+    try:
+        val = int(ans)
+        if val <= 0:
+            raise ValueError
+        return val
+    except ValueError:
+        print("Please enter a positive integer. Using default.")
+        return default
+
+
+def main() -> None:
+    """Interactive entry point."""
+    print("Secure Password Generator (OOP, secrets)")
+
+    length = _prompt_int("Password length", 12)
+    use_upper = _prompt_bool("Include uppercase", True)
+    use_digits = _prompt_bool("Include digits", True)
+    use_symbols = _prompt_bool("Include symbols", True)
+
+    policy = PasswordPolicy(
+        length=length,
+        use_lowercase=True,   # baseline alphabet included by default
+        use_uppercase=use_upper,
+        use_digits=use_digits,
+        use_symbols=use_symbols,
+    )
+
+    try:
+        gen = PasswordGenerator(policy)
+        pwds = gen.generate_three()
+        print("\nGenerated passwords:")
+        for i, p in enumerate(pwds, start=1):
+            print(f"{i}. {p}")
+    except ValueError as e:
+        print(f"Error: {e}")
+
+
 if __name__ == "__main__":
-    
-    print("--- Welcome to the Powerful Password Generator! ---")
-
-    # --- Get Password Length from User ---
-    # Use a 'while True' loop for input validation. It will keep asking until valid input is given.
-    while True:
-        try:
-            # Ask the user for a length and try to convert it to an integer.
-            pwd_length = int(input("Enter the desired password length (e.g., 12): "))
-            # Check if the number is positive.
-            if pwd_length > 0:
-                break # If valid, exit the loop.
-            else:
-                print("Please enter a positive number.")
-        except ValueError:
-            # This runs if int() fails because the user entered text instead of a number.
-            print("Invalid input. Please enter a number.")
-
-    # --- Get Character Type Preferences from User ---
-    # For each option, we get the user's 'yes' or 'no' input, convert it to lowercase,
-    # and then perform a comparison '== 'yes''. The result of this comparison is a
-    # boolean value (True or False), which is stored directly in the variable.
-    use_uppercase = input("Include uppercase letters? (yes/no): ").lower() == 'yes'
-    use_numbers = input("Include numbers? (yes/no): ").lower() == 'yes'
-    use_symbols = input("Include symbols? (yes/no): ").lower() == 'yes'
-
-    # --- Generate the password by calling our function ---
-    # We pass the user's choices as arguments to our 'generate_password' function.
-    # The string that the function returns is stored in the 'final_password' variable.
-    final_password = generate_password(pwd_length, use_uppercase, use_numbers, use_symbols)
-
-    # --- Print the Final Result ---
-    print("\n***--- Your Generated Password is: ---***")
-    print(final_password)
-    print("---------------------------------")
+    main()
