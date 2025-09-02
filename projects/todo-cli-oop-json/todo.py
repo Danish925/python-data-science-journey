@@ -1,238 +1,301 @@
 """
-To-Do List Application in Python
+To-Do List (OOP) with JSON persistence and undo.
 
-This script implements a command-line to-do list manager with the following features:
-- Add, view, edit, toggle (complete/incomplete), delete, and clear completed tasks.
-- Save tasks persistently to a text file and load on startup.
-- Undo capability with snapshot history to revert the last change.
-- Search and filter tasks by keywords and completion status.
+Features:
+- Task model (description, completed)
+- ToDoList manager (CRUD, search/filter, undo via in-memory snapshots)
+- JSON storage (tasks.json) with UTF-8 reading/writing
+- Minimal CLI for interactive use
 
-Author: [Your Name]
-Date: August 2025
+Design notes:
+- Snapshots use deepcopy to guarantee undo restores object identity/values.
+- File is rewritten atomically per save to maintain a single source of truth.
 """
 
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 import copy
-
-# Global variables
-tasks: list[dict] = []              # Main list to hold task dictionaries
-history: list[list[dict]] = []      # Stack to hold snapshots of task states for undo support
-DATA_FILE: Path = Path("tasks.txt") # Path to the file for task persistence
+import json
 
 
 # -------------------------
-# Persistence Functions
+# Domain Model
 # -------------------------
-def load_tasks() -> None:
-    """
-    Load tasks from the persistent file into the tasks list.
-    Each line in the file should be prefixed by [ ] or [x] indicating completion status.
-    """
-    tasks.clear()
-    if not DATA_FILE.exists():
-        return
-    try:
-        with DATA_FILE.open("r", encoding="utf-8") as f:
-            for line in f:
-                line = line.rstrip("\n")
-                if not line:
-                    continue
-                if line.startswith("[ ] "):
-                    desc = line[4:].strip()
-                    if desc:
-                        tasks.append({"description": desc, "completed": False})
-                elif line.startswith("[x] "):
-                    desc = line[4:].strip()
-                    if desc:
-                        tasks.append({"description": desc, "completed": True})
-                else:
-                    desc = line.strip()
-                    if desc:
-                        tasks.append({"description": desc, "completed": False})
-    except OSError as e:
-        print(f"Warning: Could not read tasks file ({e}). Starting empty.")
 
+@dataclass
+class Task:
+    """A single to-do item.
 
-def save_tasks() -> None:
+    Attributes:
+        description: Human-readable task text (non-empty when persisted).
+        completed: Completion flag (False by default).
     """
-    Save all tasks to the persistent file.
-    Each task is saved with a prefix indicating completion status.
-    """
-    try:
-        with DATA_FILE.open("w", encoding="utf-8") as f:
-            for t in tasks:
-                status = "[x]" if t.get("completed") else "[ ]"
-                desc = str(t.get("description", "")).strip()
-                if desc:
-                    f.write(f"{status} {desc}\n")
-    except OSError as e:
-        print(f"Warning: Could not save tasks ({e}).")
+    description: str
+    completed: bool = False
+
+    def toggle(self) -> None:
+        """Flip the completion status in place."""
+        self.completed = not self.completed
+
+    def to_dict(self) -> dict:
+        """Serialize to a JSON-friendly dictionary."""
+        return {"description": self.description, "completed": self.completed}
+
+    @staticmethod
+    def from_dict(d: dict) -> Optional["Task"]:
+        """Deserialize from a dictionary.
+
+        Args:
+            d: A mapping expected to contain 'description' and 'completed'.
+
+        Returns:
+            Task if valid; otherwise None (e.g., empty description).
+        """
+        if not isinstance(d, dict):
+            return None
+        desc = str(d.get("description", "")).strip()
+        if not desc:
+            return None
+        comp = bool(d.get("completed", False))
+        return Task(desc, comp)
 
 
 # -------------------------
-# Undo Support Functions
+# Application Model (Manager)
 # -------------------------
-def snapshot() -> None:
-    """
-    Take a deep copy snapshot of the current tasks list
-    and push it onto the history stack to enable undo.
-    """
-    history.append(copy.deepcopy(tasks))
 
+class ToDoList:
+    """Manage a collection of Task objects with JSON persistence and undo."""
 
-def undo() -> bool:
-    """
-    Restore tasks to the last saved snapshot, if any.
-    Returns True if undo was performed, False if no undo possible.
-    """
-    if not history:
+    def __init__(self, data_file: Path = Path("tasks.json")) -> None:
+        """Initialize the manager and eagerly load from disk if present.
+
+        Args:
+            data_file: JSON file path for persistence (default: tasks.json).
+        """
+        self._data_file: Path = data_file
+        self._tasks: List[Task] = []
+        self._history: List[List[Task]] = []  # LIFO snapshots for undo
+        self.load()
+
+    # ---------- Persistence ----------
+
+    def load(self) -> None:
+        """Load tasks from JSON if the file exists.
+
+        Behavior:
+            - Clears current tasks, then parses the JSON array.
+            - Invalid entries (e.g., missing description) are skipped.
+            - On read/parse error, prints a warning and starts empty.
+        """
+        self._tasks.clear()
+        if not self._data_file.exists():
+            return
+        try:
+            with self._data_file.open("r", encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, list):
+                for item in data:
+                    t = Task.from_dict(item)
+                    if t:
+                        self._tasks.append(t)
+        except (OSError, json.JSONDecodeError) as e:
+            print(f"Warning: Could not read JSON tasks file ({e}). Starting empty.")
+
+    def save(self) -> None:
+        """Persist current tasks to JSON.
+
+        Notes:
+            - Skips tasks whose descriptions are blank after strip().
+            - Uses pretty printing for readability; change indent if needed.
+        """
+        try:
+            payload = [t.to_dict() for t in self._tasks if t.description.strip()]
+            with self._data_file.open("w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=2)
+        except OSError as e:
+            print(f"Warning: Could not save tasks ({e}).")
+
+    # ---------- History / Undo ----------
+
+    def _snapshot(self) -> None:
+        """Capture a deep-copy snapshot before mutation to support undo."""
+        self._history.append(copy.deepcopy(self._tasks))
+
+    def undo(self) -> bool:
+        """Revert to the most recent snapshot, if any, and save.
+
+        Returns:
+            True if a snapshot was applied; False if no history exists.
+        """
+        if not self._history:
+            return False
+        prev = self._history.pop()
+        self._tasks = prev
+        self.save()
+        return True
+
+    # ---------- Query helpers ----------
+
+    @staticmethod
+    def _norm(s: str) -> str:
+        """Normalize a string for case-insensitive matching."""
+        return s.strip().lower()
+
+    # ---------- CRUD operations ----------
+
+    def list(self) -> List[Task]:
+        """Return a shallow copy of the current tasks."""
+        return list(self._tasks)
+
+    def add(self, description: str) -> bool:
+        """Add a new task with validation and persistence.
+
+        Args:
+            description: The task text.
+
+        Returns:
+            True if added; False if validation fails.
+        """
+        name = description.strip()
+        if not name:
+            print("Error: Task cannot be empty.")
+            return False
+        self._snapshot()
+        self._tasks.append(Task(name, False))
+        self.save()
+        print(f"Success: Task '{name}' was added to your list.")
+        return True
+
+    def toggle(self, index_1based: int) -> bool:
+        """Toggle a task's completion by its 1-based index.
+
+        Returns:
+            True on success; False if index is out of range.
+        """
+        i = index_1based - 1
+        if 0 <= i < len(self._tasks):
+            self._snapshot()
+            self._tasks[i].toggle()
+            self.save()
+            print(f"Success: Task {index_1based} toggled.")
+            return True
+        print("Error: Invalid task number. Please try again.")
         return False
-    prev = history.pop()
-    tasks.clear()
-    tasks.extend(prev)
-    save_tasks()
-    return True
+
+    def edit(self, index_1based: int, new_text: str) -> bool:
+        """Edit a task's description by its 1-based index.
+
+        Returns:
+            True on success; False for invalid index or empty new text.
+        """
+        i = index_1based - 1
+        if not (0 <= i < len(self._tasks)):
+            print("Error: Invalid task number.")
+            return False
+        new_text = new_text.strip()
+        if not new_text:
+            print("Error: Description cannot be empty.")
+            return False
+        self._snapshot()
+        self._tasks[i].description = new_text
+        self.save()
+        print("Success: Task updated.")
+        return True
+
+    def delete(self, index_1based: int) -> bool:
+        """Delete a task by its 1-based index.
+
+        Returns:
+            True on success; False if index is out of range.
+        """
+        i = index_1based - 1
+        if 0 <= i < len(self._tasks):
+            self._snapshot()
+            removed = self._tasks.pop(i)
+            self.save()
+            print(f"Deleted: {removed.description}")
+            return True
+        print("Error: Invalid task number.")
+        return False
+
+    def clear_completed(self) -> int:
+        """Remove all completed tasks.
+
+        Returns:
+            The number of tasks removed.
+        """
+        before = len(self._tasks)
+        remaining = [t for t in self._tasks if not t.completed]
+        if len(remaining) == before:
+            print("No completed tasks to clear.")
+            return 0
+        self._snapshot()
+        self._tasks = remaining
+        self.save()
+        removed = before - len(self._tasks)
+        print(f"Cleared {removed} completed task(s).")
+        return removed
+
+    # ---------- Search / Filter ----------
+
+    def filter(
+        self,
+        keyword: Optional[str] = None,
+        completed: Optional[bool] = None,
+    ) -> List[Task]:
+        """Return a filtered view of tasks (no persistence).
+
+        Args:
+            keyword: Case-insensitive substring to match in descriptions.
+            completed: If True/False, filter by completion status.
+
+        Returns:
+            A new list of tasks matching the criteria.
+        """
+        items = self._tasks
+        if keyword is not None and keyword.strip():
+            q = self._norm(keyword)
+            items = [t for t in items if q in self._norm(t.description)]
+        if completed is not None:
+            items = [t for t in items if t.completed is completed]
+        return list(items)
 
 
 # -------------------------
-# Helper Functions for Searching and Filtering
+# Presentation (CLI)
 # -------------------------
-def normalize(s: str) -> str:
-    """Normalize strings for case-insensitive comparison."""
-    return s.strip().lower()
 
-
-def safe_desc(t: dict) -> str:
-    """Safely get a task's description."""
-    return str(t.get("description", "")).strip()
-
-
-def filter_by_keyword(items: list[dict], query: str) -> list[dict]:
-    """Filter tasks containing the query keyword (case-insensitive)."""
-    q = normalize(query)
-    if not q:
-        return items[:]
-    return [t for t in items if q in normalize(safe_desc(t))]
-
-
-def filter_by_status(items: list[dict], completed: Optional[bool]) -> list[dict]:
-    """Filter tasks by their completion status."""
-    if completed is None:
-        return items[:]
-    return [t for t in items if bool(t.get("completed", False)) == completed]
-
-
-def filter_tasks(items: list[dict], query: Optional[str] = None,
-                 completed: Optional[bool] = None) -> list[dict]:
-    """Filter tasks by keyword and/or completion status."""
-    result = items
-    if query is not None:
-        result = filter_by_keyword(result, query)
-    if completed is not None:
-        result = filter_by_status(result, completed)
-    return result
-
-
-# -------------------------
-# Core Task Management Functions
-# -------------------------
-def add_task(task_name: str) -> None:
-    """Add a new task to the to-do list, after validating and snapshotting."""
-    name = task_name.strip()
-    if not name:
-        print("Error: Task cannot be empty.")
-        return
-    snapshot()
-    tasks.append({"description": name, "completed": False})
-    save_tasks()
-    print(f"Success: Task '{name}' was added to your list.")
-
-
-def view_tasks() -> None:
-    """Print all tasks with their status and numbering."""
+def print_tasks(tasks: List[Task]) -> None:
+    """Pretty-print the current task list."""
     print("\n--- YOUR TO-DO LIST ---")
     if not tasks:
         print("Your to-do list is currently empty.")
     else:
-        for index, task in enumerate(tasks, start=1):
-            mark = "✔️" if task.get("completed") else " "
-            print(f"{index}. [{mark} ] {task.get('description', '')}")
+        for idx, t in enumerate(tasks, start=1):
+            mark = "✔️" if t.completed else " "
+            print(f"{idx}. [{mark} ] {t.description}")
     print("-----------------------\n")
 
 
-def mark_task_complete(task_number: int) -> None:
-    """
-    Toggle the completion status of a specified task by its number.
-    """
-    i = task_number - 1
-    if 0 <= i < len(tasks):
-        snapshot()
-        tasks[i]["completed"] = not bool(tasks[i].get("completed", False))
-        save_tasks()
-        print(f"Success: Task {task_number} toggled.")
-    else:
-        print("Error: Invalid task number. Please try again.")
-
-
-def edit_task(task_number: int) -> None:
-    """
-    Edit the description of a specified task by its number, with validation.
-    """
-    i = task_number - 1
-    if not (0 <= i < len(tasks)):
-        print("Error: Invalid task number.")
+def print_filtered(tasks: List[Task]) -> None:
+    """Pretty-print a filtered set of tasks."""
+    if not tasks:
+        print("(no matching tasks)")
         return
-    current = safe_desc(tasks[i])
-    print(f"Current: {current}")
-    new_text = input("Enter new description: ").strip()
-    if not new_text:
-        print("Error: Description cannot be empty.")
-        return
-    snapshot()
-    tasks[i]["description"] = new_text
-    save_tasks()
-    print("Success: Task updated.")
+    print("\n--- FILTERED TASKS ---")
+    for idx, t in enumerate(tasks, start=1):
+        mark = "✔️" if t.completed else " "
+        print(f"{idx}. [{mark} ] {t.description}")
+    print("----------------------")
 
 
-def delete_task(task_number: int) -> None:
-    """
-    Remove the specified task from the list after snapshotting.
-    """
-    i = task_number - 1
-    if 0 <= i < len(tasks):
-        snapshot()
-        removed = tasks.pop(i)
-        save_tasks()
-        print(f"Deleted: {removed.get('description', '')}")
-    else:
-        print("Error: Invalid task number.")
-
-
-def clear_completed() -> None:
-    """Remove all completed tasks from the list after snapshotting."""
-    before = len(tasks)
-    remaining = [t for t in tasks if not t.get("completed", False)]
-    if len(remaining) == before:
-        print("No completed tasks to clear.")
-        return
-    snapshot()
-    tasks[:] = remaining
-    save_tasks()
-    print(f"Cleared {before - len(tasks)} completed task(s).")
-
-
-# -------------------------
-# Main Program Loop
-# -------------------------
 def main() -> None:
-    """
-    The main interactive loop that displays options to the user,
-    takes input, and performs actions accordingly.
-    """
-    print("Welcome to your personal To-Do List Manager!")
-    load_tasks()
-    
+    """Interactive CLI entry point."""
+    print("Welcome to your personal To-Do List Manager (OOP, JSON)!")
+    todo = ToDoList()  # loads from tasks.json automatically
+
     while True:
         print("\nPlease choose an option:")
         print("1. Add a new task")
@@ -244,65 +307,61 @@ def main() -> None:
         print("7. Search / Filter")
         print("8. Undo last action")
         print("9. Exit the application")
-        
+
         choice = input("Enter your choice (1-9): ").strip()
-        
-        if choice == '1':
+
+        if choice == "1":
             task_name = input("What task would you like to add? ")
-            add_task(task_name)
-        
-        elif choice == '2':
-            view_tasks()
-        
-        elif choice == '3':
+            todo.add(task_name)
+
+        elif choice == "2":
+            print_tasks(todo.list())
+
+        elif choice == "3":
             try:
                 num = int(input("Enter the task number to toggle: ").strip())
-                mark_task_complete(num)
+                todo.toggle(num)
             except ValueError:
                 print("Error: Please enter a valid number.")
-        
-        elif choice == '4':
+
+        elif choice == "4":
             try:
                 num = int(input("Enter the task number to edit: ").strip())
-                edit_task(num)
+                current_list = todo.list()
+                if 1 <= num <= len(current_list):
+                    print(f"Current: {current_list[num-1].description}")
+                new_text = input("Enter new description: ").strip()
+                todo.edit(num, new_text)
             except ValueError:
                 print("Error: Please enter a valid number.")
-        
-        elif choice == '5':
+
+        elif choice == "5":
             try:
                 num = int(input("Enter the task number to delete: ").strip())
-                delete_task(num)
+                todo.delete(num)
             except ValueError:
                 print("Error: Please enter a valid number.")
-        
-        elif choice == '6':
-            clear_completed()
-        
-        elif choice == '7':
+
+        elif choice == "6":
+            todo.clear_completed()
+
+        elif choice == "7":
             q = input("Keyword (press Enter to skip): ")
             s = input("Status [a]ll/[c]ompleted/[i]ncomplete (default a): ").strip().lower()
             status = True if s == "c" else False if s == "i" else None
-            results = filter_tasks(tasks, query=q, completed=status)
-            if not results:
-                print("(no matching tasks)")
-            else:
-                print("\n--- FILTERED TASKS ---")
-                for idx, t in enumerate(results, start=1):
-                    mark = "✔️" if t.get("completed") else " "
-                    print(f"{idx}. [{mark} ] {t.get('description', '')}")
-                print("----------------------")
-        
-        elif choice == '8':
-            if undo():
+            print_filtered(todo.filter(keyword=q, completed=status))
+
+        elif choice == "8":
+            if todo.undo():
                 print("Undo successful.")
             else:
                 print("Nothing to undo.")
-        
-        elif choice == '9':
+
+        elif choice == "9":
             print("Thank you for using the To-Do List Manager. Goodbye!")
-            save_tasks()
+            todo.save()
             break
-        
+
         else:
             print("Invalid choice. Please enter a number between 1 and 9.")
 
