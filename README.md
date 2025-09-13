@@ -1,8 +1,7 @@
-python-data-science-journey
+PYTHON-DATA-SCIENCE-JOURNEY
 
 Overview
-
-A beginner-friendly, hands-on journey into Python for data science—mini-projects, scripts, and notebooks that build a strong foundation step by step. The repository now highlights two structured OOP projects alongside practice scripts and learning notebooks.
+A beginner-friendly, hands-on journey into Python for data science—mini-projects, scripts, and notebooks that build skills progressively. The repository now includes three highlighted projects: Password Generator, To‑Do CLI, and Zoo Simulator, alongside practice scripts and learning notebooks.
 
 Highlights
 
@@ -12,29 +11,39 @@ Highlights
 
 3.Progression from basics to persistence, OOP, and visualization with pandas/NumPy/Matplotlib/Seaborn.
 
-4.Newly organized projects/ with per‑project READMEs and runnable entry points.
+4.Organized projects/ with per‑project READMEs and runnable entry points.
 
 Projects
 
 1.Secure Password Generator (OOP, secrets)
 
-Folder: projects/password-generator-oop
+  • Folder: projects/password-generator-oop
 
-Entry: projects/password-generator-oop/main.py
+  • Entry: projects/password-generator-oop/main.py
 
-Summary: Policy‑driven generator using the OS‑backed secrets module; guarantees at least one character from each enabled class; prints 3 passwords.
+  • Summary: Policy‑driven generator using the OS‑backed secrets module; guarantees at least one character from each enabled class; prints 3 passwords.
 
-Open: Folder - main.py
+  • Open: Folder - main.py
 
 2.To‑Do CLI (OOP + JSON + undo)
 
-Folder: projects/todo-cli-oop-json
+  • Folder: projects/todo-cli-oop-json
 
-Entry: projects/todo-cli-oop-json/todo.py
+  • Entry: projects/todo-cli-oop-json/todo.py
 
-Summary: OOP task manager with JSON persistence, case‑insensitive search/filter, and snapshot‑based undo via deepcopy.
+  • Summary: OOP task manager with JSON persistence, case‑insensitive search/filter, and snapshot‑based undo via deepcopy.
 
-Open: Folder - todo.py
+  • Open: Folder - todo.py
+
+3.Zoo Simulator (OOP: inheritance + polymorphism)
+
+  • Folder: projects/zoo-sim-oop
+
+  • Entry: projects/zoo-sim-oop/zoo.py
+
+  • Summary: CLI zoo manager with Animal → Mammal/Bird/Reptile → species, exhibits with capacity, a polymorphic “daily show,” time‑based hunger/feeding, and basic stats.
+
+  • Open: Folder - zoo.py
 
 Selected mini-projects
 
@@ -64,27 +73,29 @@ Getting started
 
 2.Clone:
 
-git clone https://github.com/Danish925/python-data-science-journey
+  • git clone https://github.com/Danish925/python-data-science-journey
 
-cd python-data-science-journey
+  • cd python-data-science-journey
 
 3.Run a project:
 
-Password Generator: cd projects/password-generator-oop && python main.py
+  • Password Generator: cd projects/password-generator-oop && python main.py
 
-To‑Do CLI: cd projects/todo-cli-oop-json && python todo.py
+  • To‑Do CLI: cd projects/todo-cli-oop-json && python todo.py
 
-Scripts: python scripts/quiz_game.py (etc.)
+  • Zoo Simulator: cd projects/zoo-sim-oop && python zoo.py
+
+  • Scripts: python scripts/quiz_game.py (etc.)
 
 4.Tip (Windows): use py instead of python if python is not recognized.
 
 Why these projects
 
-1.Security: Passwords are generated with secrets.SystemRandom for cryptographic randomness; random is intentionally avoided.
+1.Security: Passwords use OS‑backed CSPRNG via secrets; non‑crypto RNG is avoided.
 
-2.Reliability: To‑Do state is stored as human‑readable JSON via json.load/json.dump with UTF‑8 and indent=2.
+2.Reliability: To‑Do state uses human‑readable JSON via json.load/json.dump with UTF‑8 and indent=2.
 
-3.Design: Classes separate concerns (Task/ToDoList, PasswordPolicy/PasswordGenerator), making features easier to extend and test.
+3.Design: Classes separate concerns (Task/ToDoList, PasswordPolicy/PasswordGenerator, Animal/Zoo), making features easier to extend and test.
 
 Roadmap
 
@@ -101,3 +112,6 @@ Contributing
 2.Use clear commit messages (e.g., feat:, fix:, docs:) for readable history.
 
 3.Prefer relative links in Markdown for navigation inside the repo.
+
+
+
