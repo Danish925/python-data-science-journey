@@ -1,62 +1,48 @@
-Data Visualization
-Beginner‑friendly pandas practice with the Titanic dataset. Each notebook is self‑contained and ends with a short summary and exported CSV for continuity.
+Data Visualization Journey (Days 1–4)
+This repository documents a progressive, hands-on journey through data analysis and visualization with Python and pandas, using the Titanic dataset as a running example. Each “Day” adds skills and artifacts that build toward robust, reproducible analysis.
 
-Notebooks
-01_pandas_basics.ipynb
-Create a small DataFrame from a Python dict, inspect shape/columns/dtypes, and contrast Series (1D) vs DataFrame (2D). Ends with a Day 1 summary and a tiny CSV export.
+Day 1 — Setup and first look
 
-02_titanic_loading_and_inspection.ipynb
-Load the Titanic dataset with read_csv, run first‑look checks (head/tail, shape, columns), inspect structure (info, describe), count key categories (Survived, Pclass), and scan missing data. Ends with a Day 2 summary and a CSV snapshot for Day 3.
+  • Goals: Environment setup, load CSV, peek at rows, basic summary stats.
+  • Artifacts: 01_pandas_basics.ipynb / .py, initial dataset copy.
 
-03_column_selection_and_filtering.ipynb
-Practice column selection (single, multiple, by dtype), boolean filtering (single/multiple conditions with & and |), sorting (single/multiple columns), and quick groupby insights (survival by Sex and Pclass). Exports filtered datasets for Day 4.
+Day 2 — Loading and inspection
 
-Artifacts
-data/day1_demo_people.csv — Exported from 01_pandas_basics.ipynb
+  • Goals: Robust loading, dtypes, basic cleaning, descriptive stats, value_counts, simple visuals.
+  • Artifacts: 02_titanic_loading_and_inspection.ipynb / .py.
 
-data/titanic_day2.csv — Exported from 02_titanic_loading_and_inspection.ipynb
+Day 3 — Column selection and filtering
 
-data/titanic_women.csv — Exported from 03_column_selection_and_filtering.ipynb (female subset)
+  • Goals: Column subsetting, boolean masks, chained conditions, query patterns, safe .loc usage.
+  • Artifacts: 03_column_selection_and_filtering.ipynb / .py.
+  • Highlights: Clear patterns by Sex and Pclass, careful boolean indexing to avoid SettingWithCopy issues.
 
-data/titanic_complete.csv — Exported from 03_column_selection_and_filtering.ipynb (rows with non‑missing Age and Embarked)
+Day 4 — Missing data and simple features
 
-How to run locally
-Create and activate a virtual environment, then install pandas.
+  • Goals: Detect missingness, compare drop vs fill strategies, group-aware imputations, and create basic engineered features.
+  • Key techniques:
+     • Finding missing data: isnull/isna, sum, info, and percentages.
+     • Cleaning approaches: dropna with subset and thresh; fillna with constants, mode, medians; groupby-based median fills (e.g., by Sex×Pclass).
+     • Feature engineering: AgeGroup (life stages), FamilySize, IsAlone, Title extraction and simplification, FarePerPerson, Deck from Cabin.
+  • Artifacts: 04_missing_data_and_simple_features.ipynb / .py.
 
-Windows (PowerShell)
-python -m venv .venv
-.venv\Scripts\Activate
-pip install pandas
+Exported datasets (Day 4)
+CSV exports are saved under data-visualization/data to snapshot different cleaned states:
 
-macOS/Linux (bash/zsh)
-python -m venv .venv
-source .venv/bin/activate
-pip install pandas
+   • data-visualization/data/titanic_minimal_clean.csv
+     Essential columns present (e.g., Survived, Sex, Pclass); rows missing critical fields dropped.
 
-Open the notebooks in Jupyter or VS Code. Run cells top‑to‑bottom so outputs render correctly when viewed on GitHub.
+   • data-visualization/data/titanic_smart_filled.csv
+     “Smart-filled” version where Age is imputed by group medians (Sex×Pclass) and Embarked is filled with the overall mode; columns aligned back to standard names      (Age, Embarked).
 
-Tips
-Keep URLs to datasets inside the notebooks so runs are reproducible.
+   • data-visualization/data/titanic_with_features.csv
+     Feature-rich version including engineered fields: AgeGroup, FamilySize, IsAlone, Title_simple, FarePerPerson, Deck (and cleaned Age/Embarked).
 
-Restart & Run All before committing so the outputs match the code.
+How to run
+   • Python 3.9+ recommended.
 
-Keep outputs concise; show head() for large tables and rely on describe()/value_counts().
+   • Install dependencies: pandas, numpy, (optional) jupyter, seaborn, matplotlib.
 
-Roadmap
-Day 4: Handling missing data (drop vs fill), simple feature creation
+   • Run notebooks with Jupyter or run the .py scripts from the project root.
 
-Day 5: GroupBy deep dive and basic statistics (aggregations, multi‑index)
-
-Day 6+: Visualization primers (hist, box, count plots) and simple feature engineering
-
-Related
-How can I improve my README for Python projects in space
-What are best practices for updating technical documentation
-How to include project visuals in my README effectively
-What templates are recommended for space-related bookmarks
-How to ensure reproducibility in project documentation
-
-
-
-
-
+   • Outputs: The three CSVs listed above are produced by Day 4 cells near the end of that notebook/script.
