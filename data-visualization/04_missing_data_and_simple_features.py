@@ -235,7 +235,7 @@ for name, df in datasets.items():
 # Keep rows that have essential info; adjust the subset if needed
 essential_cols = ['Survived', 'Sex', 'Pclass']
 minimal_clean = titanic_df.dropna(subset=essential_cols)
-minimal_clean.to_csv('data-visualization/data/titanic_minimal_clean.csv', index=False)
+minimal_clean.to_csv('titanic_minimal_clean.csv', index=False)
 print("Saved: data-visualization/data/titanic_minimal_clean.csv")
 
 
@@ -244,7 +244,7 @@ smart_clean = df_filled[['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex',
                          'Age_filled_smart', 'SibSp', 'Parch', 'Fare', 'Embarked_filled']].copy()
 smart_clean.columns = ['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex',
                        'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']
-smart_clean.to_csv('data-visualization/data/titanic_smart_filled.csv', index=False)
+smart_clean.to_csv('titanic_smart_filled.csv', index=False)
 print("Saved: data-visualization/data/titanic_smart_filled.csv")
 
 
@@ -255,7 +255,7 @@ feature_columns = ['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex',
 featured_data = df_features[feature_columns].copy()
 # Optional: rename Age_filled_smart/Embarked_filled to simpler names
 featured_data = featured_data.rename(columns={'Age_filled_smart': 'Age', 'Embarked_filled': 'Embarked'})
-featured_data.to_csv('data-visualization/data/titanic_with_features.csv', index=False)
+featured_data.to_csv('titanic_with_features.csv', index=False)
 print("Saved: data-visualization/data/titanic_with_features.csv")
 
 
