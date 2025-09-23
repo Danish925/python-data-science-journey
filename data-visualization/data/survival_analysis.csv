@@ -1,0 +1,7 @@
+Category,Total_Passengers,Survival_Rate
+Overall,891,0.384
+Female,314,0.742
+Male,577,0.189
+Class_1,216,0.63
+Class_2,184,0.473
+Class_3,491,0.242
