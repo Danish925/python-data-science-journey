@@ -1,6 +1,5 @@
 print("=== ADVANCED MISSING VALUE STRATEGIES ===")
 print("Session 1: Pure pandas missing data mastery")
-print("Date: Monday, October 20, 2025")
 
 
 # Import pandas and numpy only (no external libraries)
