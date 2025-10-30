@@ -1,117 +1,100 @@
-PYTHON-DATA-SCIENCE-JOURNEY
+# PYTHON-DATA-SCIENCE-JOURNEY
 
-Overview
-A beginner-friendly, hands-on journey into Python for data science—mini-projects, scripts, and notebooks that build skills progressively. The repository now includes three highlighted projects: Password Generator, To‑Do CLI, and Zoo Simulator, alongside practice scripts and learning notebooks.
+## Overview
+A beginner-friendly, hands-on journey into Python for data science—mini-projects, scripts, and notebooks that build skills progressively. This repository tracks my learning path from Python fundamentals and OOP to a complete data analysis and visualization pipeline.
 
-Highlights
+---
 
-1.10+ mini Python projects focusing on clean code, input validation, and interactive CLIs.
+## 📂 Repository Structure
 
-2.Practice across control flow, loops, randomness, error handling, and file I/O.
+* **[data-visualization](./data-visualization/)**: Contains all scripts and notebooks for the data analysis and visualization pipeline, focusing on Pandas for data wrangling and Matplotlib/Seaborn for plotting.
+* **[projects](./projects/)**: Self-contained, multi-file projects focusing on Object-Oriented Programming (OOP) concepts. Each has its own README.
+* **[scripts](./scripts/)**: A collection of 10+ single-file, runnable mini-projects and utilities (games, tools, etc.). See the [scripts README](./scripts/README.md) for a full list.
+* **[notebooks](./notebooks/)**: Jupyter Notebooks used for experimentation, incremental learning, and scratch work.
 
-3.Progression from basics to persistence, OOP, and visualization with pandas/NumPy/Matplotlib/Seaborn.
+---
 
-4.Organized projects/ with per‑project READMEs and runnable entry points.
+## 💡 Highlights
 
-Projects
+* **10+ mini Python projects** focusing on clean code, input validation, and interactive CLIs.
+* Practice across **control flow, loops, randomness, error handling, and file I/O**.
+* Progression from Python basics to **persistence (JSON), Object-Oriented Programming (OOP), and data visualization** (pandas/NumPy/Matplotlib).
+* **Organized projects** with per-project `README.md` files and runnable entry points.
 
-1.Secure Password Generator (OOP, secrets)
+---
 
-  • Folder: projects/password-generator-oop
+## 🏆 Featured Projects
 
-  • Entry: projects/password-generator-oop/main.py
+### 1. [Secure Password Generator (OOP, secrets)](./projects/password-generator-oop/)
+* **Folder:** `[projects/password-generator-oop](./projects/password-generator-oop/)`
+* **Entry:** `[main.py](./projects/password-generator-oop/main.py)`
+* **Summary:** Policy-driven generator using the OS-backed `secrets` module; guarantees at least one character from each enabled class.
 
-  • Summary: Policy‑driven generator using the OS‑backed secrets module; guarantees at least one character from each enabled class; prints 3 passwords.
+### 2. [To-Do CLI (OOP + JSON + undo)](./projects/todo-cli-oop-json/)
+* **Folder:** `[projects/todo-cli-oop-json](./projects/todo-cli-oop-json/)`
+* **Entry:** `[todo.py](./projects/todo-cli-oop-json/todo.py)`
+* **Summary:** OOP task manager with JSON persistence, case-insensitive search/filter, and snapshot-based undo via `deepcopy`.
 
-  • Open: Folder - main.py
+### 3. [Zoo Simulator (OOP: inheritance + polymorphism)](./projects/zoo-sim-oop/)
+* **Folder:** `[projects/zoo-sim-oop](./projects/zoo-sim-oop/)`
+* **Entry:** `[zoo.py](./projects/zoo-sim-oop/zoo.py)`
+* **Summary:** CLI zoo manager with Animal → Mammal/Bird/Reptile inheritance, exhibits with capacity, a polymorphic “daily show,” and time-based hunger/feeding.
 
-2.To‑Do CLI (OOP + JSON + undo)
+---
 
-  • Folder: projects/todo-cli-oop-json
+## 🗺️ Roadmap
 
-  • Entry: projects/todo-cli-oop-json/todo.py
+### ✅ In Progress
+* **Data Analysis Stack:** Building a complete data cleaning and visualization pipeline using Pandas, Matplotlib, and Seaborn. All work is being tracked in the `[data-visualization](./data-visualization/)` folder.
 
-  • Summary: OOP task manager with JSON persistence, case‑insensitive search/filter, and snapshot‑based undo via deepcopy.
+### 🔜 Future Goals
+* Add JSON persistence and unit tests for selected scripts.
+* Explore more advanced statistical analysis and visualization.
+* Begin introduction to Machine Learning models and Scikit-learn.
+* Grow the portfolio with more advanced EDA exercises.
 
-  • Open: Folder - todo.py
+---
 
-3.Zoo Simulator (OOP: inheritance + polymorphism)
+## 🚀 Getting Started
 
-  • Folder: projects/zoo-sim-oop
+1.  **Requirement:** Python 3.9+ recommended.
+2.  **Clone:**
+    ```sh
+    git clone [https://github.com/Danish925/python-data-science-journey](https://github.com/Danish925/python-data-science-journey)
+    cd python-data-science-journey
+    ```
+3.  **Run a Project:**
+    ```sh
+    # Password Generator
+    cd projects/password-generator-oop
+    python main.py
+    
+    # To-Do CLI
+    cd projects/todo-cli-oop-json
+    python todo.py
+    
+    # Zoo Simulator
+    cd projects/zoo-sim-oop
+    python zoo.py
+    ```
+4.  **Run a Script:**
+    ```sh
+    python scripts/quiz_game.py
+    ```
+5.  **Tip (Windows):** Use `py` instead of `python` if `python` is not recognized.
 
-  • Entry: projects/zoo-sim-oop/zoo.py
+---
 
-  • Summary: CLI zoo manager with Animal → Mammal/Bird/Reptile → species, exhibits with capacity, a polymorphic “daily show,” time‑based hunger/feeding, and basic stats.
+## ✨ Why These Projects
 
-  • Open: Folder - zoo.py
+* **Security:** Passwords use OS-backed CSPRNG via `secrets`; non-crypto RNG is avoided.
+* **Reliability:** To-Do state uses human-readable JSON via `json.load`/`json.dump` with `UTF-8` and `indent=2`.
+* **Design:** Classes separate concerns (e.g., `Task`/`ToDoList`, `PasswordPolicy`/`PasswordGenerator`, `Animal`/`Zoo`), making features easier to extend and test.
 
-Selected mini-projects
+---
 
-1.Powerful Password Generator (earlier procedural version) – configurable secure passwords with robust input checks.
+## 🤝 Contributing
 
-2.Simple Quiz Game – interactive Q&A with score tracking.
-
-3.Dice Rolling Simulator – randomness exploration with replay loop.
-
-4.Number Guessing Game – loops plus try/except input handling.
-
-5.Simple Countdown Timer – input validation and time display formatting.
-
-Repository layout
-
-1.projects/ — self‑contained mini‑apps with their own README and entry script.
-
-2.scripts/ — small single‑file exercises such as dice_roller.py, quiz_game.py, countdown_timer.py.
-
-3.notebooks/ — Jupyter notebooks for incremental learning and experimentation.
-
-4.data/ — optional raw/ and processed/ subfolders (with a data README when used).
-
-Getting started
-
-1.Requirement: Python 3.9+ recommended.
-
-2.Clone:
-
-  • git clone https://github.com/Danish925/python-data-science-journey
-
-  • cd python-data-science-journey
-
-3.Run a project:
-
-  • Password Generator: cd projects/password-generator-oop && python main.py
-
-  • To‑Do CLI: cd projects/todo-cli-oop-json && python todo.py
-
-  • Zoo Simulator: cd projects/zoo-sim-oop && python zoo.py
-
-  • Scripts: python scripts/quiz_game.py (etc.)
-
-4.Tip (Windows): use py instead of python if python is not recognized.
-
-Why these projects
-
-1.Security: Passwords use OS‑backed CSPRNG via secrets; non‑crypto RNG is avoided.
-
-2.Reliability: To‑Do state uses human‑readable JSON via json.load/json.dump with UTF‑8 and indent=2.
-
-3.Design: Classes separate concerns (Task/ToDoList, PasswordPolicy/PasswordGenerator, Animal/Zoo), making features easier to extend and test.
-
-Roadmap
-
-1.JSON persistence and unit tests for selected scripts and projects.
-
-2.Data analytics stack: pandas, NumPy, visualization (Matplotlib/Seaborn) notebooks.
-
-3.Additional mini‑projects and EDA exercises to grow the portfolio.
-
-Contributing
-
-1.Issues and suggestions are welcome—open a discussion or PR with a clear description.
-
-2.Use clear commit messages (e.g., feat:, fix:, docs:) for readable history.
-
-3.Prefer relative links in Markdown for navigation inside the repo.
-
-
-
+1.  Issues and suggestions are welcome—open a discussion or PR with a clear description.
+2.  Use clear commit messages (e.g., `feat:`, `fix:`, `docs:`) for readable history.
+3.  Prefer relative links in Markdown for navigation inside the repo.
