@@ -42,10 +42,10 @@ This section is all about making cool charts and graphs in Python. We'll start w
 * [**09_Seaborn_and_Pandas_Integration.ipynb**](./matplotlib_and_seaborn/09_Seaborn_and_Pandas_Integration.ipynb): Shows how well Seaborn and Pandas work together. It's super smooth!
 * [**10_Professional_Styling_and_Figure_Customization.ipynb**](./matplotlib_and_seaborn/10_Professional_Styling_and_Figure_Customization.ipynb): Even more advanced styling tricks for your Seaborn charts.
 * [**11_Seaborn_Box_Plots\_&\_Violin_Plots.ipynb**](./matplotlib_and_seaborn/11_Seaborn_Box_Plots_&_Violin_Plots.ipynb): Using box plots and violin plots to see your data's distribution and find outliers.
-* [**12_FacetGrid\_&\_Multi-Dimensional_Plots.ipynb**](./matplotlib_and_seaborn/12_FacetGrid_&_Multi-Dimensional_Plots.ipynb): A powerful tool called `FacetGrid` that lets you create a grid of plots based on a different categories in your data.
+* [**12_FacetGrid\_&\_Multi-Dimensional_Plots.ipynb**](./matplotlib_and_seaborn/12_FacetGrid_&_Multi-Dimensional_Plots.ipynb): A powerful tool called `FacetGrid` that lets you create a grid of plots based on different categories in your data.
 * [**13_Seaborn_Correlation_Heatmaps.ipynb**](./matplotlib_and_seaborn/13_Seaborn_Correlation_Heatmaps.ipynb): How to use heatmaps to see which variables are correlated with each other.
 * [**14_Seaborn_Heatmap_Customization.ipynb**](./matplotlib_and_seaborn/14_Seaborn_Heatmap_Customization.ipynb): Making your heatmaps look just right with custom colors and labels.
-* [**15_Seaborn_pairplot_for_Multi-Dimensional_Analysis.ipynb**](./matplotlib_and_seaborn/15_Seaborn_primary_for_Multi-Dimensional_Analysis.ipynb): A fantastic plot (`pairplot`) that shows the relationships between every pair of features in your dataset.
+* [**15_Seaborn_pairplot_for_Multi-Dimensional_Analysis.ipynb**](./matplotlib_and_seaborn/15_Seaborn_pairplot_for_Multi-Dimensional_Analysis.ipynb): A fantastic plot (`pairplot`) that shows the relationships between every pair of features in your dataset.
 * [**16_Seaborn_Regression_Plots_lmplot.ipynb**](./matplotlib_and_seaborn/16_Seaborn_Regression_Plots_lmplot.ipynb): How to plot linear regression lines on your scatter plots using `lmplot`.
 
 ---
@@ -63,3 +63,10 @@ This folder holds the final images (`.png` files) created in the Matplotlib and 
 * [**part7_seaborn_age_dashboard.png**](./matplotlib_and_seaborn_analysis/part7_seaborn_age_dashboard.png)
 * [**part8_seaborn_subplot_dashboard.png**](./matplotlib_and_seaborn_analysis/part8_seaborn_subplot_dashboard.png)
 * [**part9_seaborn_dashboard.png**](./matplotlib_and_seaborn_analysis/part9_seaborn_dashboard.png)
+* [**part10_seaborn_survival_report.png**](./matplotlib_and_seaborn_analysis/part10_seaborn_survival_report.png)
+* [**part11_seaborn_box_violin_dashboard.png**](./matplotlib_and_seaborn_analysis/part11_seaborn_box_violin_dashboard.png)
+* [**part12_seaborn_facetgrid_report.png**](./matplotlib_and_seaborn_analysis/part12_seaborn_facetgrid_report.png)
+* [**part13_seaborn_correlation_dashboard.png**](./matplotlib_and_seaborn_analysis/part13_seaborn_correlation_dashboard.png)
+* [**part14_seaborn_heatmap_report.png**](./matplotlib_and_seaborn_analysis/part14_seaborn_heatmap_report.png)
+* [**part15_seaborn_pairplot_report.png**](./matplotlib_and_seaborn_analysis/part15_seaborn_pairplot_report.png)
+* [**part16_seaborn_regression_dashboard.png**](./matplotlib_and_seaborn_analysis/part16_seaborn_regression_dashboard.png)
