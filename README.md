@@ -92,9 +92,3 @@ A beginner-friendly, hands-on journey into Python for data science—mini-projec
 * **Design:** Classes separate concerns (e.g., `Task`/`ToDoList`, `PasswordPolicy`/`PasswordGenerator`, `Animal`/`Zoo`), making features easier to extend and test.
 
 ---
-
-## 🤝 Contributing
-
-1.  Issues and suggestions are welcome—open a discussion or PR with a clear description.
-2.  Use clear commit messages (e.g., `feat:`, `fix:`, `docs:`) for readable history.
-3.  Prefer relative links in Markdown for navigation inside the repo.
